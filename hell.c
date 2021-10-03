@@ -152,7 +152,7 @@ void report(struct sockaddr_in *servAddr)
     printf("\n\tServer listening on http://%s:%s (localhost)\n\n", hostBuffer, serviceBuffer);
 }
 
-void interface()
+void interface() //isn't used anywhere. Yet.
 {
     bool exit_check = false;
 
