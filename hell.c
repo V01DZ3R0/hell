@@ -49,9 +49,9 @@ int main()
     }
 
     listen(s, SOMAXCONN); //somaxconn =128  btw
-    printf("\n\t\"ext\" to exit the program\r\n\t\"xd\" to  do smth\r\n");
+   // printf("\n\t\"ext\" to exit the program\r\n\t\"xd\" to  do smth\r\n");
 
-   /////////////// interface();
+   // interface();
 
     puts("\n\tWaiting for incoming connections...");
 
