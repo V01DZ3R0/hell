@@ -9,7 +9,7 @@
 #include <sys/types.h> // for .html (i guess)
 #include <arpa/inet.h>
 #include <stdlib.h>
-
+//МИШКА ФРЕДИ НЕЯВНО ЗАКАСТИТ К ВОЙДУ ЕСЛИ ТЫ НЕ ОТВЕТИШЬ В ЭТОТ ТРЕД
 #include <stdbool.h> // for the interface()
 #define SIZE 1024
 #define BACKLOG 10 // Passed to listen()
