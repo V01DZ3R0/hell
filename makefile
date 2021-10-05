@@ -1,3 +1,3 @@
 hell : 
-	sudo gcc hell.c -o hell
+	 gcc hell.c -o hell
 
