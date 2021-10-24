@@ -154,9 +154,14 @@ void handler(int new_s, char httpHeader[])
         FooHeader(httpHeader, req1);
     }
 }
-void FooHeader(char httpHeader[], char req1[250])
+void FooHeader(char httpHeader[], char req1[250]) //kinda like 404 HTTP err 
 {
-    char resp[100] = "<html><head/><body><h1>You requested: ", resp1[100] = "</h1></body></html>";
+      if (strcmp(req1, "HTTP") == 0)
+    {
+        req1="Literally nothing...";
+    }
+
+    char resp[100] = "<html><head/><body><h1>You requested: ", resp1[100] = "</h1><p><a target=\"_self\" href=\"/home\">Homepage</a></p></body></html>";
     strcat(resp, req1);
     strcat(resp, resp1);
     strcat(httpHeader, resp);
