@@ -20,6 +20,7 @@
 void report(struct sockaddr_in *servAddr);
 void setHttpHeader(char httpHeader[]);
 void seticon(char icon[]);
+void servecycle(int sockfd);
 void handler(int client_sock, char httpHeader[]);
 void interface(pid_t pid);
 void FooHeader(char httpHeader[], char req1[250]);
@@ -72,7 +73,6 @@ int main()
         char str[100], comp1[] = "ext", comp2[] = "xd", comp3[] = "rst";
         while (69)
         {
-
             scanf("%s", str);
             if (strcmp(comp1, str) == 0)
             {
@@ -112,32 +112,34 @@ int main()
     }
 }
 
-void servecycle(int s)
+void servecycle(int sockfd)
 {
-    int count = 0, new_s = 0; //new_s is the same as client_socket, but i chose this name
+    int count = 0;
+    int conn = 0; // client connection
 
     while (1)
     {
-        char httpHeader[8000] = "HTTP/1.1 200 OK\r\n\n";
-        new_s = accept(s, 0, 0);
-        if (new_s < 0)
+        char buf[8000] = "HTTP/1.1 200 OK\n\n";
+        conn = accept(sockfd, 0, 0);
+        if (conn < 0)
         {
             perror("Accept failed");
         }
         count++;
         //printf("\r\n\n\r\tRequest accepted - %d\n\r\n", count);
-        handler(new_s, httpHeader);
-        send(new_s, httpHeader, sizeof(httpHeader), 0);
-        close(new_s);
+        handler(conn, buf);
+        send(conn, buf, sizeof(buf), 0);
+        close(conn);
     }
 }
-void handler(int new_s, char httpHeader[])
-{
 
+void handler(int conn, char out[])
+{
     char req[500];
     char *resp;
-    read(new_s, req, 500);
-    //printf("%s", req); //prints the full request
+
+    read(conn, req, 500);
+    printf("%s", req); //prints the full request
     char *req1, http[] = "home";
     strtok(req, " /");
     req1 = strtok(NULL, " /");
@@ -147,13 +149,14 @@ void handler(int new_s, char httpHeader[])
     */
     if (strcmp(req1, http) == 0)
     {
-        setHttpHeader(httpHeader);
+        setHttpHeader(out);
     }
     else
     {
-        FooHeader(httpHeader, req1);
+        FooHeader(out, req1);
     }
 }
+
 void FooHeader(char httpHeader[], char req1[250]) //kinda like 404 HTTP err 
 {
       if (strcmp(req1, "HTTP") == 0)
@@ -169,16 +172,17 @@ void FooHeader(char httpHeader[], char req1[250]) //kinda like 404 HTTP err
 
 void setHttpHeader(char httpHeader[])
 {
+    char responseData[8000] = "";
+    char line[1000] = "";
+
     // file object to return
     FILE *htmlData = fopen("site.html", "r");
-
-    char line[1000];
-    char responseData[8000];
-    while (fgets(line, 1000, htmlData) != 0)
+    while (fgets(line, sizeof(line), htmlData) != 0)
     {
         strcat(responseData, line);
     }
     strcat(httpHeader, responseData);
+    fclose(htmlData);
 }
 
 void report(struct sockaddr_in *servAddr)
@@ -200,5 +204,3 @@ void report(struct sockaddr_in *servAddr)
     }
     printf("\n\tServer listening on http://%s:%s (localhost)\n", hostBuffer, serviceBuffer);
 }
-
-
