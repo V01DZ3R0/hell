@@ -172,12 +172,12 @@ void FooHeader(char httpHeader[], char req1[250]) //kinda like 404 HTTP err
 
 void setHttpHeader(char httpHeader[])
 {
+    char responseData[8000] = "";
+    char line[1000] = "";
+
     // file object to return
     FILE *htmlData = fopen("site.html", "r");
-
-    char line[1000];
-    char responseData[8000];
-    while (fgets(line, 1000, htmlData) != 0)
+    while (fgets(line, len(line), htmlData) != 0)
     {
         strcat(responseData, line);
     }
