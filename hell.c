@@ -177,7 +177,7 @@ void setHttpHeader(char httpHeader[])
 
     // file object to return
     FILE *htmlData = fopen("site.html", "r");
-    while (fgets(line, len(line), htmlData) != 0)
+    while (fgets(line, sizeof(line), htmlData) != 0)
     {
         strcat(responseData, line);
     }
