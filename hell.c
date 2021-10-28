@@ -132,13 +132,13 @@ void servecycle(int sockfd)
     }
 }
 
-void handler(int new_s, char httpHeader[])
+void handler(int conn, char out[])
 {
-
     char req[500];
     char *resp;
-    read(new_s, req, 500);
-    //printf("%s", req); //prints the full request
+
+    read(conn, req, 500);
+    printf("%s", req); //prints the full request
     char *req1, http[] = "home";
     strtok(req, " /");
     req1 = strtok(NULL, " /");
@@ -148,13 +148,14 @@ void handler(int new_s, char httpHeader[])
     */
     if (strcmp(req1, http) == 0)
     {
-        setHttpHeader(httpHeader);
+        setHttpHeader(out);
     }
     else
     {
-        FooHeader(httpHeader, req1);
+        FooHeader(out, req1);
     }
 }
+
 void FooHeader(char httpHeader[], char req1[250]) //kinda like 404 HTTP err 
 {
       if (strcmp(req1, "HTTP") == 0)
@@ -201,5 +202,3 @@ void report(struct sockaddr_in *servAddr)
     }
     printf("\n\tServer listening on http://%s:%s (localhost)\n", hostBuffer, serviceBuffer);
 }
-
-
