@@ -72,7 +72,6 @@ int main()
         char str[100], comp1[] = "ext", comp2[] = "xd", comp3[] = "rst";
         while (69)
         {
-
             scanf("%s", str);
             if (strcmp(comp1, str) == 0)
             {
@@ -112,25 +111,27 @@ int main()
     }
 }
 
-void servecycle(int s)
+void servecycle(int sockfd)
 {
-    int count = 0, new_s = 0; //new_s is the same as client_socket, but i chose this name
+    int count = 0;
+    int conn = 0; // client connection
 
     while (1)
     {
-        char httpHeader[8000] = "HTTP/1.1 200 OK\r\n\n";
-        new_s = accept(s, 0, 0);
-        if (new_s < 0)
+        char buf[8000] = "HTTP/1.1 200 OK\r\n\n";
+        conn = accept(sockfd, 0, 0);
+        if (conn < 0)
         {
             perror("Accept failed");
         }
         count++;
         //printf("\r\n\n\r\tRequest accepted - %d\n\r\n", count);
-        handler(new_s, httpHeader);
-        send(new_s, httpHeader, sizeof(httpHeader), 0);
-        close(new_s);
+        handler(conn, buf);
+        send(conn, buf, sizeof(buf), 0);
+        close(conn);
     }
 }
+
 void handler(int new_s, char httpHeader[])
 {
 
