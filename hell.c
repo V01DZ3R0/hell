@@ -20,6 +20,7 @@
 void report(struct sockaddr_in *servAddr);
 void setHttpHeader(char httpHeader[]);
 void seticon(char icon[]);
+void servecycle(int sockfd);
 void handler(int client_sock, char httpHeader[]);
 void interface(pid_t pid);
 void FooHeader(char httpHeader[], char req1[250]);
