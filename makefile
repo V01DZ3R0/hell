@@ -1,3 +1,4 @@
-hell : 
-	 gcc hell.c -o hell
+hell:
+	- gcc hell.c -o hell
 
+.PHONY: hell
