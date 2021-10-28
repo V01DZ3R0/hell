@@ -119,7 +119,7 @@ void servecycle(int sockfd)
 
     while (1)
     {
-        char buf[8000] = "HTTP/1.1 200 OK\r\n\n";
+        char buf[8000] = "HTTP/1.1 200 OK\n\n";
         conn = accept(sockfd, 0, 0);
         if (conn < 0)
         {
