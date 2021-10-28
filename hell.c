@@ -182,6 +182,7 @@ void setHttpHeader(char httpHeader[])
         strcat(responseData, line);
     }
     strcat(httpHeader, responseData);
+    fclose(htmlData);
 }
 
 void report(struct sockaddr_in *servAddr)
